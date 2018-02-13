@@ -1,6 +1,6 @@
-# Electron ShoppingList Desktop App
+# Electron YouTube MP3 downloader Desktop App
 
-This is a cross platform shoppinglist desktop application built on electron
+This is a cross platform YouTube MP3 downloader desktop application built on electron
 
 ### Version
 1.0.0

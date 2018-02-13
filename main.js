@@ -10,7 +10,6 @@ process.env.NODE_ENV = 'development';
 const {app, BrowserWindow, Menu, ipcMain} = electron;
 
 let mainWindow;
-//let addWindow;
 
 app.on('ready', function()
 {
@@ -53,65 +52,14 @@ exports.getUrlInformation=(arg)=>
   ytdl.getInfo(url, options, function(err, urlInformation) 
   {
     if (err) throw err;  
-
     console.log('getUrlInformation: urlInformation: ' , urlInformation);
-
-    /*console.log('id:', urlInformation.id);
-    console.log('title:', urlInformation.title);
-    console.log('url:', urlInformation.url);
-    console.log('thumbnail:', urlInformation.thumbnail);
-    console.log('description:', urlInformation.description);
-    console.log('filename:', urlInformation._filename);
-    console.log('format id:', urlInformation.format_id);
-*/
     mainWindow.webContents.send('UrlInformation', urlInformation);
   });
-
 }
-// Handle add item window
-/*function createAddWindow(){
-  addWindow = new BrowserWindow({
-    width: 300,
-    height:200,
-    title:'Add Shopping List Item'
-  });
-  addWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'addWindow.html'),
-    protocol: 'file:',
-    slashes:true
-  }));
-  // Handle garbage collection
-  addWindow.on('close', function(){
-    addWindow = null;
-  });
-}*/
-
-// Catch item:add
-/*ipcMain.on('item:add', function(e, item){
-  mainWindow.webContents.send('item:add', item);
-  addWindow.close(); 
-  // Still have a reference to addWindow in memory. Need to reclaim memory (Grabage collection)
-  //addWindow = null;
-});*/
-
-// Create menu template
 const mainMenuTemplate =  [
-  // Each object is a dropdown
   {
     label: 'File',
     submenu:[
-      /*{
-        label:'Add Item',
-        click(){
-          createAddWindow();
-        }
-      },
-      {
-        label:'Clear Items',
-        click(){
-          mainWindow.webContents.send('item:clear');
-        }
-      },*/
       {
         label: 'Quit',
         accelerator:process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',

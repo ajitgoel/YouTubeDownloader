@@ -45,11 +45,9 @@ class YouTubeDownloaderForm extends React.Component
   }
   handleChangeClick(event) 
   {
-    alert('A check button was clicked: ');// + this.state.value);
   }
   handleSubmit(event) 
   {
-    alert('A name was submitted: ');// + this.state.value);
     event.preventDefault();
   }
   render() 
