@@ -29,6 +29,8 @@ class YouTubeDownloaderForm extends React.Component
 
   updateUrlInformation(event, arg) 
   {
+    console.log(arg);
+    
     if(arg=== false)
     {
       this.setState({urlInvalid: true});

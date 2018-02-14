@@ -1,8 +1,9 @@
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
-//const youtubedl = require('youtube-dl');
+const youtubedl = require('youtube-dl');
 const ytdl = require('ytdl-core');
+const isPlaylist = require("is-playlist");
 
 // SET ENV
 process.env.NODE_ENV = 'development';
@@ -28,22 +29,25 @@ app.on('ready', function()
 });
 
 exports.getUrlInformation=(arg)=>
-{
-  var url = arg;
-  var isUrlValid= ytdl.validateURL(url);
-  if(isUrlValid === false)
-  {
-    mainWindow.webContents.send('UrlInformation', isUrlValid);
-    return;
-  } 
-  
-  var options = [];
-  ytdl.getInfo(url, options, function(err, urlInformation) 
-  {
-    if (err) throw err;  
-    console.log('getUrlInformation: urlInformation: ' , urlInformation);
-    mainWindow.webContents.send('UrlInformation', urlInformation);
-  });
+{  
+    var url = arg;
+    var isUrlaPlaylist= isPlaylist(url);
+    if(isUrlaPlaylist === false)
+    {
+      var isUrlValid= ytdl.validateURL(url);
+      if(isUrlValid === false)
+      {
+        mainWindow.webContents.send('UrlInformation', isUrlValid);
+        return;
+      }      
+    }
+    
+    var options = [];
+    youtubedl.getInfo(url, options, function(err, info) 
+    {
+      if (err) throw err;  
+      mainWindow.webContents.send('UrlInformation', urlInformation);
+    });
 }
 const mainMenuTemplate =  [
   {
