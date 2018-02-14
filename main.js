@@ -29,25 +29,14 @@ app.on('ready', function()
 
 exports.getUrlInformation=(arg)=>
 {
-  //console.log("getUrlInformation: " + arg);
-  /*var url = arg;
-  var options = [];
-  youtubedl.getInfo(url, options, function(err, urlInformation) 
-  {
-    if (err) throw err;  
-
-    console.log('id:', urlInformation.id);
-    console.log('title:', urlInformation.title);
-    console.log('url:', urlInformation.url);
-    console.log('thumbnail:', urlInformation.thumbnail);
-    console.log('description:', urlInformation.description);
-    console.log('filename:', urlInformation._filename);
-    console.log('format id:', urlInformation.format_id);
-
-    mainWindow.webContents.send('UrlInformation', urlInformation);
-  });*/
-
   var url = arg;
+  var isUrlValid= ytdl.validateURL(url);
+  if(isUrlValid === false)
+  {
+    mainWindow.webContents.send('UrlInformation', isUrlValid);
+    return;
+  } 
+  
   var options = [];
   ytdl.getInfo(url, options, function(err, urlInformation) 
   {

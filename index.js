@@ -9,6 +9,7 @@ class YouTubeDownloaderForm extends React.Component
     this.state = 
     {
       url: '', 
+      urlInvalid: false,
       urlsInformation:[]
     };
     this.handleAddClick = this.handleAddClick.bind(this);
@@ -29,9 +30,17 @@ class YouTubeDownloaderForm extends React.Component
   updateUrlInformation(event, arg) 
   {
     console.log('updateUrlInformation: ', arg);
+    if(arg=== false)
+    {
+      this.setState({urlInvalid: true});
+      return;
+    }
+    this.setState({urlInvalid: false});
+    
     var urlsInformation = this.state.urlsInformation;
     urlsInformation.push(arg);
     this.setState({urlsInformation: urlsInformation});
+    this.setState({url: ''});
   }
 
   handleAddClick(event) 
@@ -57,7 +66,7 @@ class YouTubeDownloaderForm extends React.Component
         <div className="row">
           <div className="input-field">
             <input id="Url" type="text" value={this.state.url} className="validate" onChange={this.handleUrlChange}></input> 
-            <label htmlFor="Url">Url</label>                     
+            <label id="UrlLabel" htmlFor="Url" data-error={this.state.urlInvalid===true?'The entered url seems to be invalid. ':''}>Url</label>                     
           </div>          
     </div>
 
