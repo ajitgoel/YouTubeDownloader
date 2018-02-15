@@ -2,8 +2,8 @@ const electron = require('electron');
 const path = require('path');
 const url = require('url');
 const youtubedl = require('youtube-dl');
-const ytdl = require('ytdl-core');
-const isPlaylist = require("is-playlist");
+//const ytdl = require('ytdl-core');
+//const isPlaylist = require("is-playlist");
 
 // SET ENV
 process.env.NODE_ENV = 'development';
@@ -30,7 +30,7 @@ app.on('ready', function()
 
 exports.getUrlInformation=(url)=>
 {  
-    var options = [];
+    var options = ["-j", "--flat-playlist"];
     youtubedl.getInfo(url, options, function(error, urlInformation) 
     {
       if (error) 
@@ -38,7 +38,18 @@ exports.getUrlInformation=(url)=>
         mainWindow.webContents.send('UrlInformation', false);
         return;
       }
-      mainWindow.webContents.send('UrlInformation', urlInformation);
+
+      var urlsInformationArray = [];
+      if(urlInformation.constructor === Array)
+      {
+        urlsInformationArray.push.apply(urlsInformationArray, urlInformation);
+      }
+      else
+      {
+        urlsInformationArray.push(urlInformation);
+      }
+
+      mainWindow.webContents.send('UrlInformation', urlsInformationArray);
     });
 }
 const mainMenuTemplate =  [

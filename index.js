@@ -66,6 +66,11 @@ class YouTubeDownloaderForm extends React.Component
   {
     event.preventDefault();
   }
+  handleDownload(event) 
+  {
+    //event.preventDefault();
+  }
+
   render() 
   {
     return (
@@ -85,37 +90,37 @@ class YouTubeDownloaderForm extends React.Component
 
     <div className="row">
       <table className="striped bordered">
-            <thead>
-              <tr>
-                <th><input type="checkbox" className="filled-in" id="filled-in-box" checked="checked" onChange={this.handleChangeClick}/>
-                  <label htmlFor="filled-in-box"></label></th>
-                  <th>Thumbnail</th>
-                <th>Title</th>
-                  <th>Size</th>
-                  <th>% completed</th>
-                  <th>Status</th>
-              </tr>
-            </thead>
+        <thead>
+          <tr>
+            <th><input type="checkbox" className="filled-in" id="filled-in-box" checked="checked" onChange={this.handleChangeClick}/>
+              <label htmlFor="filled-in-box"></label></th>
+              <th>Thumbnail</th>
+            <th>Title</th>
+              <th>Size</th>
+              <th>% completed</th>
+              <th>Status</th>
+          </tr>
+        </thead>
     
-            <tbody>              
-              {this.state.urlsInformation.map((urlInformation, key) => (
-                <tr key={key}>
-                  <td><input type="checkbox" className="filled-in" id="filled-in-box" />
-                      <label htmlFor="filled-in-box"></label> </td>
-                  <td>
-                      <img className="materialboxed" src={urlInformation.thumbnail} height='100px' width='100px'/>
-                  </td>
-                  <td>{urlInformation.title}</td>
-                  <td>10 MB</td>
-                  <td>0%</td>
-                  <td>Not Started</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <tbody>              
+          {this.state.urlsInformation.map((urlInformation, key) => (
+            <tr key={key}>
+              <td><input type="checkbox" className="filled-in" id="filled-in-box" />
+                  <label htmlFor="filled-in-box"></label> </td>
+              <td>
+                  <img className="materialboxed" src={urlInformation.thumbnail} height='100px' width='100px'/>
+              </td>
+              <td>{urlInformation.title}</td>
+              <td>10 MB</td>
+              <td>0%</td>
+              <td>Not Started</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
     <div className="row">
-      <button className="btn waves-effect waves-light" type="button" name="action">Download</button>
+      <button className="btn waves-effect waves-light" type="button" name="action" onClick={this.handleDownload}>Download</button>
     </div>
   </form>
     );
