@@ -28,24 +28,16 @@ app.on('ready', function()
   Menu.setApplicationMenu(mainMenu);
 });
 
-exports.getUrlInformation=(arg)=>
+exports.getUrlInformation=(url)=>
 {  
-    var url = arg;
-    var isUrlaPlaylist= isPlaylist(url);
-    if(isUrlaPlaylist === false)
-    {
-      var isUrlValid= ytdl.validateURL(url);
-      if(isUrlValid === false)
-      {
-        mainWindow.webContents.send('UrlInformation', isUrlValid);
-        return;
-      }      
-    }
-    
     var options = [];
-    youtubedl.getInfo(url, options, function(err, info) 
+    youtubedl.getInfo(url, options, function(error, urlInformation) 
     {
-      if (err) throw err;  
+      if (error) 
+      {
+        mainWindow.webContents.send('UrlInformation', false);
+        return;
+      }
       mainWindow.webContents.send('UrlInformation', urlInformation);
     });
 }

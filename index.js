@@ -20,11 +20,18 @@ class YouTubeDownloaderForm extends React.Component
   }
   componentDidMount() 
   {
-    ipcRenderer.on('UrlInformation', this.updateUrlInformation)
+    try 
+    {
+      ipcRenderer.on('UrlInformation', this.updateUrlInformation);
+    } 
+    catch (error) 
+    {
+      this.setState({urlInvalid: true}); 
+    }
   } 
   componentWillUnmount() 
   {
-    ipcRenderer.removeListener('UrlInformation', this.updateUrlInformation)
+    ipcRenderer.removeListener('UrlInformation', this.updateUrlInformation);
   }
 
   updateUrlInformation(event, arg) 
@@ -39,7 +46,7 @@ class YouTubeDownloaderForm extends React.Component
     this.setState({urlInvalid: false});
     
     var urlsInformation = this.state.urlsInformation;
-    urlsInformation.push(arg);
+    urlsInformation.push.apply(urlsInformation, arg);
     this.setState({urlsInformation: urlsInformation});
     this.setState({url: ''});
   }
@@ -82,7 +89,7 @@ class YouTubeDownloaderForm extends React.Component
               <tr>
                 <th><input type="checkbox" className="filled-in" id="filled-in-box" checked="checked" onChange={this.handleChangeClick}/>
                   <label htmlFor="filled-in-box"></label></th>
-                  <th>ThumbNail</th>
+                  <th>Thumbnail</th>
                 <th>Title</th>
                   <th>Size</th>
                   <th>% completed</th>
@@ -96,7 +103,7 @@ class YouTubeDownloaderForm extends React.Component
                   <td><input type="checkbox" className="filled-in" id="filled-in-box" />
                       <label htmlFor="filled-in-box"></label> </td>
                   <td>
-                      <img className="materialboxed" src={urlInformation.thumbnail_url}/>
+                      <img className="materialboxed" src={urlInformation.thumbnail} height='100px' width='100px'/>
                   </td>
                   <td>{urlInformation.title}</td>
                   <td>10 MB</td>
