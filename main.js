@@ -30,7 +30,9 @@ app.on('ready', function()
 
 exports.getUrlInformation=(url)=>
 {  
-    var options = ["-j", "--flat-playlist"];
+    //var options = ['--get-id','--get-thumbnail','--get-description','--get-duration','--get-filename']; 
+
+    var options = ['-j', '--flat-playlist', '-e','--get-title', '--get-thumbnail'];
     youtubedl.getInfo(url, options, function(error, urlInformation) 
     {
       if (error) 
