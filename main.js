@@ -2,6 +2,8 @@ const electron = require('electron');
 const path = require('path');
 const url = require('url');
 const youtubedl = require('youtube-dl');
+const windowStateKeeper = require('electron-window-state');
+
 //const ytdl = require('ytdl-core');
 //const isPlaylist = require("is-playlist");
 
@@ -14,13 +16,37 @@ let mainWindow;
 
 app.on('ready', function()
 {
-  mainWindow = new BrowserWindow({});
+  // Load the previous state with fallback to defaults 
+  let mainWindowState = windowStateKeeper({
+    defaultWidth: 1000,
+    defaultHeight: 800
+  });
+
+  mainWindow = new BrowserWindow({
+    title: 'YouTube Downloader', 
+    show: false,
+    'x': mainWindowState.x,
+    'y': mainWindowState.y,
+    'width': mainWindowState.width,
+    'height': mainWindowState.height
+    //backgroundColor: '#002b36',
+  });
+  mainWindowState.manage(mainWindow);
+
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes:true
   }));
-  mainWindow.on('closed', function(){
+
+  mainWindow.on('ready-to-show', function() 
+  { 
+    mainWindow.show(); 
+    mainWindow.focus(); 
+  });
+
+  mainWindow.on('closed', function()
+  {
     app.quit();
   });
 
