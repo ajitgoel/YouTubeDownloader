@@ -58,7 +58,7 @@ exports.getUrlInformation=(url)=>
 {  
     //var options = ['--get-id','--get-thumbnail','--get-description','--get-duration','--get-filename']; 
 
-    var options = ['-j', '--flat-playlist', '-e','--get-title', '--get-thumbnail'];
+    var options = ['-j', '--flat-playlist'];
     youtubedl.getInfo(url, options, function(error, urlInformation) 
     {
       if (error) 
@@ -80,6 +80,25 @@ exports.getUrlInformation=(url)=>
       mainWindow.webContents.send('UrlInformation', urlsInformationArray);
     });
 }
+
+exports.downloadAsMP3=(urls)=>
+{  
+  var urlsLength = urls.length;
+  for (var i = 0;  i < urlsLength; i++) 
+  {
+    var url = urls[i];
+    ytdl.exec(url, ['--extract-audio', '--audio-format', 'mp3'], {}, function exec(err, output) 
+    {
+      'use strict';
+      if (err) 
+      { 
+        throw err; 
+      }
+      console.log(output.join('\n'));
+    });
+  }
+}
+
 const mainMenuTemplate =  [
   {
     label: 'File',

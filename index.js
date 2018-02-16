@@ -99,6 +99,7 @@ class YouTubeDownloaderForm extends React.Component
               <th>Size</th>
               <th>% completed</th>
               <th>Status</th>
+              <th></th>
           </tr>
         </thead>
     
@@ -114,6 +115,11 @@ class YouTubeDownloaderForm extends React.Component
               <td>10 MB</td>
               <td>0%</td>
               <td>Not Started</td>
+              <td>
+                <a className="waves-effect waves-light btn" onClick={this.handleRemoveClick}>
+                  <i className="material-icons left">cloud</i>Remove
+                </a>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -1,0 +1,4 @@
+https://github.com/nathanbuchar/electron-settings
+https://github.com/rg3/youtube-dl#options
+https://blog.avocode.com/4-must-know-tips-for-building-cross-platform-electron-apps-f3ae9c2bffff
+
